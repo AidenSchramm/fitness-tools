@@ -32,10 +32,9 @@ new class extends Component {
             </div>
             <x-input label="Weight" wire:model='weight' value="{{ $weight }}" type="number" suffix="lbs"/>
             <x-slot:actions>
+                <div style="margin-right: auto; margin-left:1em">{!! $rate !!}</div>
                 <x-button label="Calculate" class="btn-primary" type="submit" spinner="save" />
             </x-slot:actions>
         </x-form>
-
-        <div>{!! $rate !!}</div>
     </x-card>
 </div>
