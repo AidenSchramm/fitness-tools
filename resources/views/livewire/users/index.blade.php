@@ -64,6 +64,7 @@ new class extends Component {
             'headers' => $this->headers()
         ];
     }
+
 }; ?>
 
 <div>
@@ -85,6 +86,8 @@ new class extends Component {
             @endscope
         </x-table>
     </x-card>
+
+    <x-input label="Input" placeholder="Test Input"/>
 
     <!-- FILTER DRAWER -->
     <x-drawer wire:model="drawer" title="Filters" right separator with-close-button class="lg:w-1/3">
