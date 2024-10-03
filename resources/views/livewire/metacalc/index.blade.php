@@ -3,9 +3,6 @@
 use Livewire\Volt\Component;
 use Mary\Traits\Toast;
 
-use Illuminate\Http\Request;
-
-
 new class extends Component {
     use Toast;
 
@@ -39,11 +36,6 @@ new class extends Component {
         
     }
     public function updated($name, $value) 
-    {
-        $this->save();
-    }
-
-    public function update()
     {
         $this->save();
     }
