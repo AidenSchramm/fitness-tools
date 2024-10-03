@@ -18,7 +18,7 @@ new class extends Component {
     public $sex = [[ 'name' => "Male", 'id' => 0, 'selected' => true], [ 'name' => "Female", 'id' => 1]];
 
     public $selected;
-    public function save(Request $request)
+    public function save()
     {
         
         // Male: BMR = 66.47 + ( 6.24 × weight in pounds ) + ( 12.7 × height in inches ) – ( 6.755 × age in years )
@@ -37,20 +37,30 @@ new class extends Component {
         }
         
     }
+    public function updated($name, $value) 
+    {
+        $this->save();
+    }
+
+    public function update()
+    {
+        $this->save();
+    }
+
 }; ?>
 
 <div>
     <x-card>
         <x-form wire:submit="save">
-            <x-input label="Age" wire:model='age' value="{{ $age }}" type="number"/>
-            <x-radio label="Sex" :options="$sex" wire:model='selected'/>
+            <x-input label="Age" wire:model.blur='age' value="{{ $age }}" type="number"/>
+            <x-radio label="Sex" :options="$sex" wire:model.live='selected'/>
             <div style="display: flex">
-                <x-input label="feet" wire:model='feet' value="{{ $feet }}" type="number"/>
-                <x-input label="inches" wire:model='inches' value="{{ $inches }}" type="number"/>
+                <x-input label="feet" wire:model.blur='feet' value="{{ $feet }}" type="number"/>
+                <x-input label="inches" wire:model.blur='inches' value="{{ $inches }}" type="number"/>
             </div>
-            <x-input label="Weight" wire:model='weight' value="{{ $weight }}" type="number" suffix="lbs"/>
+            <x-input label="Weight" wire:model.blur='weight' value="{{ $weight }}" type="number" suffix="lbs"/>
             <x-slot:actions>
-                <div style="margin-right: auto; margin-left:1em">{!! $rate !!} kcal / day</div>
+                <div wire:model.blur='rate' value="{{ $age }}" style="margin-right: auto; margin-left:1em">{!! $rate !!} kcal / day</div>
                 <x-button label="Calculate" class="btn-primary" type="submit" spinner="save" />
             </x-slot:actions>
         </x-form>
