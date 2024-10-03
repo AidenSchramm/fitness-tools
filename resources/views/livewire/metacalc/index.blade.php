@@ -13,11 +13,12 @@ new class extends Component {
     public $age = 18;
     public $feet = 5;
     public $inches = 8;
-    public int $rate = 0;
+    public int $rate = 1744;
     
     public $sex = [[ 'name' => "Male", 'id' => 0, 'selected' => true], [ 'name' => "Female", 'id' => 1]];
 
     public $selected;
+
     public function save()
     {
         
