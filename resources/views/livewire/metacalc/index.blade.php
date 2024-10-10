@@ -53,7 +53,7 @@ new class extends Component {
             </div>
             <x-input label="Weight" wire:model.blur='weight' value="{{ $weight }}" type="number" suffix="lbs"/>
             <x-slot:actions>
-                <div style="margin-right: auto; margin-left:1em">{!! $rate !!} kcal / day</div>
+            <div wire:model.blur='rate' style="margin-right: auto; margin-left:1em">{!! $rate !!} </div>
                 <x-button label="Calculate" class="btn-primary" type="submit" spinner="save" />
 
             </x-slot:actions>

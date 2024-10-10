@@ -58,7 +58,7 @@ new class extends Component {
             </div>
             <x-input label="Weight" wire:model.blur='weight' value="{{ $weight }}" type="number" suffix="lbs"/>
             <x-slot:actions>
-                <div wire:model.blur='bmi' value="{{ $bmi }}" style="margin-right: auto; margin-left:1em">{!! $bmi !!} </div>
+                <div wire:model.blur='bmi' style="margin-right: auto; margin-left:1em">{!! $bmi !!} </div>
                 <x-button label="Calculate" class="btn-primary" type="submit" spinner="save" />
             </x-slot:actions>
         </x-form>
