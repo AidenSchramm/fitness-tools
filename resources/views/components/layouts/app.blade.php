@@ -57,6 +57,7 @@
                 </x-menu-sub>
                 <x-menu-separator title="Calculators" icon="o-calculator" />
                     <x-menu-item title="Metabolic Rate" link="/metacalc" />
+                    <x-menu-item title="BMI" link="/bmicalc" />
             </x-menu>
         </x-slot:sidebar>
 
