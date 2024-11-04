@@ -18,7 +18,7 @@ new class extends Component {
     
     public $hip_inch     = 34;
 
-    public $bodyfat      = 21.5;
+    public $bodyfat      = 16.4;
     
     
     public float $bmi = 23.0;
