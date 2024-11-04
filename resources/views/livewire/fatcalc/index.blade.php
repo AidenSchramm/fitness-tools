@@ -12,14 +12,11 @@ new class extends Component {
     public $height_feet  = 5;
     public $height_inch  = 8;
     
-    public $neck_feet    = 1;
-    public $neck_inch    = 7;
+    public $neck_inch    = 19;
     
-    public $abdomen_feet = 3;
-    public $abdomen_inch = 1;
+    public $abdomen_inch = 37;
     
-    public $hip_feet     = 2;
-    public $hip_inch     = 10;
+    public $hip_inch     = 34;
 
     public $bodyfat      = 21.5;
     
@@ -42,9 +39,9 @@ new class extends Component {
         error_log($this->selected);
         
         $temp_height  = (($this->height_feet  * 12) + $this->height_inch);
-        $temp_abdomen = (($this->abdomen_feet * 12) + $this->abdomen_inch);
-        $temp_neck    = (($this->neck_feet    * 12) + $this->neck_inch);
-        $temp_hip     = (($this->hip_feet     * 12) + $this->hip_inch);
+        $temp_abdomen = $this->abdomen_inch;
+        $temp_neck    = $this->neck_inch;
+        $temp_hip     = $this->hip_inch;
         
 
         
@@ -83,18 +80,15 @@ new class extends Component {
             </div>
             
             <div style="display: flex">
-                <x-input label="Neck feet" wire:model.blur='neck_feet' value="{{ $neck_feet }}" type="number"/>
                 <x-input label="Neck inch" wire:model.blur='neck_inch' value="{{ $neck_inch }}" type="number"/>
             </div>
             
             <div style="display: flex">
-                <x-input label="Abdomen feet" wire:model.blur='abdomen_feet' value="{{ $abdomen_feet }}" type="number"/>
                 <x-input label="Abdomen inch" wire:model.blur='abdomen_inch' value="{{ $abdomen_inch }}" type="number"/>
             </div>
 
             @if($show)
                 <div style="display: flex">
-                    <x-input label="Hip feet" wire:model.blur='hip_feet' value="{{ $hip_feet }}" type="number"/>
                     <x-input label="Hip inch" wire:model.blur='hip_inch' value="{{ $hip_inch }}" type="number"/>
                 </div>
             @endif
