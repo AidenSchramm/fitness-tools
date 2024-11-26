@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
                 $table->uuid('user_id')->primary();
@@ -17,7 +17,7 @@ return new class extends Migration
                 $table->string('user_email')->unique();
                 $table->timestamp('user_create_date')->useCurrent();
                 $table->timestamps();
-            });
+                    });
     }
 
     /**

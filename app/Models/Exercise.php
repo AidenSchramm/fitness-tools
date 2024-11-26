@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class User extends Model
+class Exercise extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'user_id'; // Primary key
+    protected $primaryKey = 'exercise_id'; // Primary key
     protected $keyType = 'string'; // UUID type
     public $incrementing = false; // No auto-incrementing
 
-    protected $fillable = ['user_name', 'user_email']; // Fillable fields
+    protected $fillable = ['name', 'desc', 'sets', 'reps', 'duration', 'workout_id']; // Fillable fields
 
     protected static function boot()
     {
@@ -26,10 +26,11 @@ class User extends Model
         });
     }
 
-    public function workouts()
+    public function workout()
     {
-        return $this->hasMany(Workout::class, 'user_id', 'user_id');
+        return $this->belongsTo(Workout::class, 'workout_id', 'workout_id');
     }
 }
+
 
 ?>
