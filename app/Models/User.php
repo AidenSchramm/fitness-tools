@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as AuthTable;
 use Illuminate\Support\Str;
 
-class User extends Model
+class User extends AuthTable
 {
     use HasFactory;
 
@@ -30,6 +31,21 @@ class User extends Model
     {
         return $this->hasMany(Workout::class, 'user_id', 'user_id');
     }
+    public function createTestUser()
+    {
+        // Check if a test user already exists to avoid duplicates
+        $testUser = self::where('user_email', 'testuser@example.com')->first();
+
+        if (!$testUser) {
+            // Create a new test user
+            $testUser = self::create([
+                'user_name' => 'Test User',
+                'user_email' => 'testuser@example.com',
+            ]);
+        }
+
+        return $testUser;
+    }
 }
 
-?>
+
