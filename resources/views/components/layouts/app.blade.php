@@ -35,7 +35,7 @@
 
                 {{-- User --}}
                 @if($user = auth()->user())
-                    <x-menu-separator />
+                    <x-menu-separator title="Account" icon="o-user"/>
 
                     <x-list-item :item="$user" value="name" sub-value="email" no-separator no-hover class="-mx-2 !-my-2 rounded">
                         <x-slot:actions>
@@ -46,6 +46,15 @@
                     
                     <x-menu-separator />
                     
+                @else
+                    <x-menu-separator title="Account" icon="o-user"/>
+
+                    <x-menu-item title="Login" link="/login" />
+                    <x-menu-item title="Sign In" link="/signin" />
+
+                    
+                    <x-menu-separator />
+
                 @endif
                 
                 <x-menu-item title="Hello" icon="o-sparkles" link="/" />
