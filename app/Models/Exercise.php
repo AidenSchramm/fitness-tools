@@ -31,6 +31,3 @@ class Exercise extends Model
         return $this->belongsTo(Workout::class, 'workout_id', 'workout_id');
     }
 }
-
-
-?>
