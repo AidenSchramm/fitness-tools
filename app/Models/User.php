@@ -31,7 +31,7 @@ class User extends AuthTable
     {
         return $this->hasMany(Workout::class, 'user_id', 'user_id');
     }
-    public function createTestUser()
+    public static function createTestUser()
     {
         // Check if a test user already exists to avoid duplicates
         $testUser = self::where('user_email', 'testuser@example.com')->first();
@@ -45,6 +45,21 @@ class User extends AuthTable
         }
 
         return $testUser;
+    }
+    public static function createUser(string $name, string $email)
+    {
+        // Check if a test user already exists to avoid duplicates
+        $newUser = self::where($name, $email)->first();
+
+        if (!$newUser) {
+            // Create a new test user
+            $newUser = self::create([
+                'user_name' => $name,
+                'user_email' => $email,
+            ]);
+        }
+
+        return $newUser;
     }
 }
 

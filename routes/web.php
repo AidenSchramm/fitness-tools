@@ -9,7 +9,7 @@ Volt::route('/bmicalc', 'bmicalc.index');
 Volt::route('/fatcalc', 'fatcalc.index');
 Volt::route('/login', 'login.index');
 
-Volt::route('/signin', 'signin.index');
+Volt::route('/signup', 'signup.index');
 
 
 ?>

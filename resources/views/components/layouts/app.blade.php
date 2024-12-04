@@ -50,7 +50,7 @@
                     <x-menu-separator title="Account" icon="o-user"/>
 
                     <x-menu-item title="Login" link="/login" />
-                    <x-menu-item title="Sign In" link="/signin" />
+                    <x-menu-item title="Sign Up" link="/signup" />
 
                     
                     <x-menu-separator />
