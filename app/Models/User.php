@@ -5,17 +5,33 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as AuthTable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Log;
 
 class User extends AuthTable
 {
     use HasFactory;
+    use HasApiTokens, Notifiable;
 
     protected $primaryKey = 'user_id'; // Primary key
     protected $keyType = 'string'; // UUID type
     public $incrementing = false; // No auto-incrementing
 
-    protected $fillable = ['user_name', 'user_email']; // Fillable fields
+    protected $fillable = ['user_name', 'email','password']; // Fillable fields
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 
     protected static function boot()
     {
@@ -31,35 +47,37 @@ class User extends AuthTable
     {
         return $this->hasMany(Workout::class, 'user_id', 'user_id');
     }
-    public static function createTestUser()
+    public static function createUser($name, $password, $email)
     {
+
         // Check if a test user already exists to avoid duplicates
-        $testUser = self::where('user_email', 'testuser@example.com')->first();
+        $testUser = self::where('email', $email)->first();
 
-        if (!$testUser) {
-            // Create a new test user
-            $testUser = self::create([
-                'user_name' => 'Test User',
-                'user_email' => 'testuser@example.com',
-            ]);
-        }
+        $testUserName = self::where('user_name', $name)->first();
 
-        return $testUser;
-    }
-    public static function createUser(string $name, string $email)
-    {
-        // Check if a test user already exists to avoid duplicates
-        $newUser = self::where($name, $email)->first();
-
-        if (!$newUser) {
-            // Create a new test user
-            $newUser = self::create([
+        if ((!$testUser) && (!$testUserName)) {
+            return self::create([
                 'user_name' => $name,
-                'user_email' => $email,
+                'email' => $email,
+                'password' => Hash::make($password),
             ]);
         }
+    }
 
-        return $newUser;
+    public static function loginUser($email, $password)
+    {
+        $temp = Auth::attempt(['email' => $email, 'password' => $password]);
+        if ($temp) {
+            session()->regenerate();
+            return redirect()->intended();
+        }
+
+        return null;
+    }
+
+    public static function checkAuth()
+    {
+        return Auth::check();
     }
 }
 
