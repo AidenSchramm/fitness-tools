@@ -29,11 +29,12 @@ new class extends Component {
         
         if(($this->email) == ($this->cEmail)){
             $output = User::createUser($this->name, $this->password, $this->email);
+            if($output == null){
+                $this->addError('email', 'The provided credentials do not match our records.');
+            }
         }
 
-        if(output == null){
-             $this->addError('email', 'The provided credentials do not match our records.');
-        }
+
         
     }
 }; ?>

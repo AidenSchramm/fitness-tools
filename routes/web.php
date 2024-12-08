@@ -15,5 +15,7 @@ Volt::route('/login', 'login.index')->name('login');
 
 Volt::route('/signup', 'signup.index');
 
+Volt::route('/workouts', 'workouts.index');
+
 
 ?>
