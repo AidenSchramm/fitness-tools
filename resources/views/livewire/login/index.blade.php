@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use Mary\Traits\Toast;
 use Livewire\Attributes\Validate; 
 use App\Models\User;
-
+use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Context;
+use Illuminate\Http\Request;
 
 
 new class extends Component {
@@ -14,12 +16,13 @@ new class extends Component {
     #[Validate('required|min:6')] 
     public $password = '';
 
-    public function login()
+    public function login(Request $request)
     {
 
         $this->validate(); 
 
-        User::loginUser($this->email, $this->password);
+        AuthController::loginUser($this->email, $this->password);
+        Log::info('User authenticated.', ['auth_id' => Auth::id()]);
         // if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
         //     session()->regenerate();
         //     return redirect()->intended('/dashboard'); // Redirect to dashboard or desired page

@@ -47,38 +47,6 @@ class User extends AuthTable
     {
         return $this->hasMany(Workout::class, 'user_id', 'user_id');
     }
-    public static function createUser($name, $password, $email)
-    {
-
-        // Check if a test user already exists to avoid duplicates
-        $testUser = self::where('email', $email)->first();
-
-        $testUserName = self::where('user_name', $name)->first();
-
-        if ((!$testUser) && (!$testUserName)) {
-            return self::create([
-                'user_name' => $name,
-                'email' => $email,
-                'password' => Hash::make($password),
-            ]);
-        }
-    }
-
-    public static function loginUser($email, $password)
-    {
-        $temp = Auth::attempt(['email' => $email, 'password' => $password]);
-        if ($temp) {
-            session()->regenerate();
-            return redirect()->intended();
-        }
-
-        return null;
-    }
-
-    public static function checkAuth()
-    {
-        return Auth::check();
-    }
 }
 
 

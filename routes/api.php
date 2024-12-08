@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +16,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
+
+// Route::get('/logout', function () {
+//     return redirect('/');
+// })->name('logout');
+
+
+// Route::group(['middleware' => ['web']], function () {
+//     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// });
+
+// Route::middleware(['auth', 'auth.session'])->group(function () {
+//     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// });
 
