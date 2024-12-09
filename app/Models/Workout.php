@@ -37,13 +37,11 @@ class Workout extends Model
     }
 
 
-    public static function createWorkout(string $name, string $userId){
-        $testWorkout = User::where('name', $name)->first();
-        if ((!$testWorkout)){
-            return Workout::create([
-                'name' => $name,
-                'user_id' => $userId,
-            ]);
-        }
+    public static function createWorkout(string $name, string $desc, $userId){
+        return Workout::create([
+            'name' => $name,
+            'desc' => $desc,
+            'user_id' => $userId,
+        ]);
     }
 }
