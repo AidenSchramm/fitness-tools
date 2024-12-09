@@ -20,7 +20,7 @@ new class extends Component {
         ];
 
     
-    public $workout;
+    public $workouts;
     // public function workouts(): Collection {
     //     return collect([
     //         ['id' => 1, 'workout_id' => '1', 'name' => 'Workout1', 'desc' => 'description 1'],
@@ -62,7 +62,10 @@ new class extends Component {
     public function create(){
         $this->validate();
         
-        Workout::createWorkout($this->newName, $this->newDesc, $this->userId);
+        $workout = Workout::createWorkout($this->newName, $this->newDesc, $this->userId);
+
+        redirect()->route('workout', ['id' => $workout->workout_id]);
+        
     }
 
     public function resetCreate(){
