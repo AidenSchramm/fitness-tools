@@ -26,5 +26,6 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 
+Volt::route('/exercises', 'exercises.index');
 
 ?>
