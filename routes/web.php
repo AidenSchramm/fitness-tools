@@ -15,7 +15,7 @@ Volt::route('/login', 'login.index')->name('login');
 
 Volt::route('/signup', 'signup.index');
 
-Volt::route('/workouts', 'workouts.index');
+
 Route::group(['middleware' => ['web']], function () {
     //Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     //Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -26,6 +26,9 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 
-Volt::route('/exercises', 'exercises.index');
+Volt::route('/workouts', 'workouts.index')->middleware('auth');
+Volt::route('/workout/{id}', 'workout.index')->middleware('auth')->name('workout');
+Volt::route('/exercises', 'exercises.index')->middleware('auth');
+
 
 ?>

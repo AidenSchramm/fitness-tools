@@ -4,10 +4,11 @@ use App\Models\Workout;
 use Illuminate\Support\Collection;
 use Livewire\Volt\Component;
 use Mary\Traits\Toast;
-use Illuminate\Support\Facades\Auth;
 
 new class extends Component {
     use Toast;
+
+    public $id;
 
     public array $headers = [
             ['key' => 'workout_id', 'label' => '#', 'class' => 'w-1'],
@@ -15,7 +16,6 @@ new class extends Component {
             ['key' => 'desc', 'label' => 'Description', 'sortable' => false]
         ];
 
-    public $userId;
 
     public function workouts(): Collection {
         return collect([
@@ -32,27 +32,15 @@ new class extends Component {
         ];
     }
 
-    // Gets the ID of the signed in user on pageload
-    public function mount(){
-        $this->userId=Auth::id();
+    public function mount($id) {
+        $this->id = $id;
     }
-    
-    public function edit($id){
-        redirect() ->route('workout', ['id' => $id]);
-    }
-
-
-    // TODO
-    // Change to delete from data base later
-    public function delete($id){
-        redirect() ->route('workout', ['id' => $id]);
-    }
-
 };
 ?>
 
 <div>
     <!-- HEADER -->
+    {{$id}}
     <x-header title="Workouts" seperator progress-indicator>
         <x-slot:middle class="!justify-end">
             <x-input placeholder="Search..." wire:model.live.debounce="search" clearable icon="o-magnifying-glass" />
@@ -64,13 +52,6 @@ new class extends Component {
 
     <!-- Workout TABLE -->
     <x-card>
-        <x-table :headers="$headers" :rows="$workouts"  >
-                @scope('actions', $row)
-                    <div style="display: flex">
-                        <x-button icon="o-pencil-square" wire:click="edit({{ $row['id'] }})"  spinner class="btn-sm" />
-                        <x-button icon="o-trash" spinner class="btn-sm" />
-                    </div>
-                @endscope
-        </x-table>
+        <x-table :headers="$headers" :rows="$workouts"  link="/exercises/?from={user}"/>
     </x-card>
 </div>
