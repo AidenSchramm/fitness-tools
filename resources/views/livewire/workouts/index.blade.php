@@ -41,6 +41,7 @@ new class extends Component {
         $user=Auth::user();
         $this->userId= $user->user_id;
         $this->workouts = $user->workouts()->get();
+
     }
     
     public function edit($id){
