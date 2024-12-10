@@ -39,19 +39,11 @@ new class extends Component {
             ['key' => 'reps', 'label' => 'Reps', 'class'],
             ['key' => 'duration', 'label' => 'Duration', 'class']
         ];
-
-
-    public function workouts(): Collection {
-        return collect([
-            ['id' => 1, 'exercise_id' => '1', 'name' => 'Bench press', 'desc' => 'lift bar up n down', 'sets' => '4', 'reps' => '8', 'duration' => '0'],
-            ['id' => 2, 'exercise_id' => '2', 'name' => 'Squat', 'desc' => 'legs go up n down', 'sets' => '4', 'reps' => '8', 'duration' => '0']
-            ]);
-    }
-
+    
     public function with(): array
     {
         return [
-            'workouts' => $this->workouts(),
+            'workouts' => $this->exercises,
         ];
     }
 
