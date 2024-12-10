@@ -31,18 +31,15 @@ class Exercise extends Model
         return $this->belongsTo(Workout::class, 'workout_id', 'workout_id');
     }
 
-    public static function createExercise(string $name, string $desc, int $sets, int $reps, $duration, string $userId) {
-        $testExercise = User::where('name', $name)->first();
-        if ((!$testExercise)){
+    public static function createExercise(string $name, string $desc, int $sets, int $reps, $duration, string $workout_id) {
             return Exercise::create([
                 'name' => $name,
                 'desc' => $desc,
                 'sets' => $sets,
                 'reps' => $reps,
                 'duration' => $duration,
-                'user_id' => $userId,
+                'workout_id' => $workout_id,
             ]);
-        }
     }
 
 }

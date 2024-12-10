@@ -4,6 +4,10 @@ use App\Models\Workout;
 use Illuminate\Support\Collection;
 use Livewire\Volt\Component;
 use Mary\Traits\Toast;
+use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Validate;
+use Livewire\Attributes\Reactive;
+use function Livewire\Volt\{state};
 
 new class extends Component {
     use Toast;
@@ -11,6 +15,21 @@ new class extends Component {
     public $id;
     public $workoutName;
     public $desc;
+    public int $exerciseCnt;
+
+    public $workout;
+
+    public $modal;
+    public string $newDesc;
+    public string $newName;
+    #[Validate('required', message: 'Sets is required')]
+    #[Validate('integer', message: 'Sets must be a integer')]
+    public $newSets = 1;
+    #[Validate('required', message: 'Reps is required')]
+    #[Validate('integer', message: 'Reps must be a integer')]
+    public $newReps = 1;
+
+    public $newDuration;
 
     public array $headers = [
             ['key' => 'exercise_id', 'label' => '#', 'class' => 'w-1'],
@@ -37,17 +56,23 @@ new class extends Component {
     }
 
     public function mount($id) {
-        $this->id = $id;
 
-        $workout = Workout::find($id);
-        $exercises = $workout->exercises();
-        $this->workoutName = $workout->name;
-        $this->exercises = $workout->exercises()->get();
-        $this->desc = $workout->desc;
+        $this->workout = Workout::find($id);
+        $exercises = $this->workout->exercises();
+        $this->exerciseCnt =$exercises->count();
+        $this->workoutName = $this->workout->name;
+        $this->exercises = $this->workout->exercises()->get();
+        $this->desc = $this->workout->desc;
 
 
     }
+    public function create(): void{
+        $this->validate();
+        $this->modal = false;
+        $this->workout->createExercise($this->newName, $this->newDesc, $this->newSets, $this->newReps, $this->newDuration);
+    }
 };
+
 ?>
 
 <div>
@@ -63,6 +88,19 @@ new class extends Component {
     </x-header>
     {{$desc}}
 
+    <!-- New Exercise Modal -->
+
+    <x-modal wire:model="modal" class="backdrop-blur">
+        <x-form wire:submit.prevent="create">
+            <x-input label="Name" wire:model.blur="newName" value="{{ $newName }}"></x-input>
+            <x-input label="Description" wire:model.blur="newDesc" value="{{ $newDesc }}"></x-input>
+            <x-input label="Sets" wire:model.blur="newSets" value="{{ $newSets }}"></x-input>
+            <x-input label="Reps" wire:model.blur="newReps" value="{{ $newReps }}"></x-input>
+            <x-button label="Cancel" @click="$wire.modal = false" />
+            <x-button label="Create" class="btn-primary" type="submit"/>
+        </x-form>
+    </x-modal>
+
     <!-- Workout TABLE -->
     <x-card>
         <x-table :headers="$headers" :rows="$workouts"  >
@@ -72,9 +110,13 @@ new class extends Component {
             @endscope
             @scope('actions', $row)
             <div style="display: flex">
-                <x-button icon="o-pencil-square" wire:click="edit('{{ $row['workout_id'] }}')"  spinner class="btn-sm" />
+                <x-button icon="o-pencil-square" wire:click="edit('{{ $row['exercise_id'] }}')"  spinner class="btn-sm" />
                 <x-button icon="o-trash" spinner class="btn-sm" />
             </div>
             @endscope
         </x-table>
+        <x-slot:actions>
+            <x-button label="New" class="btn-primary" @click="$wire.modal = true" />
+        </x-slot:actions>
+    </x-card>
 </div>

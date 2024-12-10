@@ -16,7 +16,7 @@ new class extends Component {
 
     public $selected;
 
-    public function save()
+    public function save(): void
     {
         
         // Male: BMR = 66.47 + ( 6.24 × weight in pounds ) + ( 12.7 × height in inches ) – ( 6.755 × age in years )
@@ -35,7 +35,7 @@ new class extends Component {
         }
         
     }
-    public function updated($name, $value) 
+    public function updated($name, $value): void
     {
         $this->save();
     }

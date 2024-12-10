@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Models\Exercise;
 
 class Workout extends Model
 {
@@ -35,6 +36,11 @@ class Workout extends Model
     {
         return $this->hasMany(Exercise::class, 'workout_id', 'workout_id');
     }
+
+    public function createExercise(string $name, string $desc, int $sets, int $reps, $duration){
+        return Exercise::createExercise($name, $desc, $sets, $reps, $duration, $this->workout_id);
+    }
+
 
 
     public static function createWorkout(string $name, string $desc, $userId){

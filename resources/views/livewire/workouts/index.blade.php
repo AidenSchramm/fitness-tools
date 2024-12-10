@@ -52,7 +52,6 @@ new class extends Component {
     // TODO
     // Change to delete from data base later
     public function delete($id){
-        Log::info($id); 
         redirect()->route('workout', ['id' => $id]);
     }
 
@@ -95,7 +94,6 @@ new class extends Component {
             <x-button label="Cancel" @click="$wire.modal = false" />
             <x-button label="Create" type="submit" @click="$wire.modal = false" />
         </x-form>
-        
     </x-modal>
     <!-- Workout TABLE -->
     <x-card>
