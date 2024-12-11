@@ -10,7 +10,8 @@ new class extends Component {
     use Toast;
 
     public $modal;
-
+    public $deleteModal = false;
+    public $deleteID;
     public $userId;
 
     public array $headers = [
@@ -48,14 +49,22 @@ new class extends Component {
         redirect()->route('workout', ['id' => $id]);
     }
 
-
+    public function showDeleteModal($id){
+        $this->deleteID = $id;
+        $this->deleteModal = true;
+    }
+    public function confirmDelete() {
+        $this->delete($this->deleteID);
+        $this->deleteModal = false;
+    }
     // Deletes workout sheet
     public function delete($id){
-        #redirect()->route('workout', ['id' => $id]);
         $workout = Workout::findOrFail($id);
         $workout->delete();
         // Refresh the list of workouts after deletion
         $this->workouts = Auth::user()->workouts()->get();
+
+
     }
 
     #[Validate('required|min:3')] 
@@ -68,7 +77,7 @@ new class extends Component {
         $workout = Workout::createWorkout($this->newName, $this->newDesc, $this->userId);
 
         $this->workouts = Auth::user()->workouts()->get();
-        
+        $this->resetCreate();
     }
 
     public function resetCreate(){
@@ -89,6 +98,7 @@ new class extends Component {
             <x-button label="Filters" @click="$wire.drawer = true" responsive icon="o-funnel" />
         </x-slot:actions>
     </x-header>
+    <!--CREATE MODAL-->
     <x-modal wire:model="modal" class="backdrop-blur">
         <x-form wire:submit="create">
             <x-input label="Name" wire:model.blur="newName" value="{{ $newName }}"></x-input>
@@ -96,6 +106,15 @@ new class extends Component {
             <x-button label="Cancel" @click="$wire.modal = false" />
             <x-button label="Create" class="btn-primary" type="submit" @click="$wire.modal = false" />
         </x-form>
+    </x-modal>
+    <!--EDIT MODAL-->
+
+    <!--DELETE MODAL-->
+    <x-modal wire:model="deleteModal" class="backdrop-blur">
+        <h2>Confirm Delete</h2>
+        <p>Are you sure you want delete this workout?</p>
+        <x-button label="Cancel" @click="$wire.deleteModal = false" />
+        <x-button label="Delete" class="btn-danger" @click="$wire.confirmDelete" />
     </x-modal>
     <!-- Workout TABLE -->
     <x-card>
@@ -109,9 +128,7 @@ new class extends Component {
 
                         <x-button icon="c-arrow-right-end-on-rectangle" wire:click="edit('{{ $row['workout_id'] }}')"  spinner class="btn-sm" />
                         <x-button icon="o-pencil-square" spinner class="btn-sm" />
-                        <x-button icon="o-trash" wire:click="delete('{{ $row['workout_id'] }}')" spinner class="btn-sm" />
-                    </div>
-                @endscope
+                        <x-button icon="o-trash" wire:click="showDeleteModal('{{ $row['workout_id'] }}')" spinner class="btn-sm" />                @endscope
         </x-table>
         <x-slot:actions>
             <x-button label="New" class="btn-primary" @click="$wire.modal = true" />
