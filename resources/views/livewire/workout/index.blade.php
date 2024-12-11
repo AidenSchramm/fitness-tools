@@ -19,9 +19,11 @@ new class extends Component {
 
     public $workout;
 
+    public $exercises;
+
     public $modal;
-    public string $newDesc;
-    public string $newName;
+    public string $newDesc = '';
+    public string $newName = '';
     #[Validate('required', message: 'Sets is required')]
     #[Validate('integer', message: 'Sets must be a integer')]
     public $newSets = 1;
@@ -39,7 +41,7 @@ new class extends Component {
             ['key' => 'reps', 'label' => 'Reps', 'class'],
             ['key' => 'duration', 'label' => 'Duration', 'class']
         ];
-    
+
     public function with(): array
     {
         return [
