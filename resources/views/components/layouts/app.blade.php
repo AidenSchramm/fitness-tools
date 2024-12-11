@@ -49,26 +49,19 @@
                     </x-list-item>
 
                     
-                    <x-menu-separator />
-                    
                 @else
                     <x-menu-separator title="Account" icon="o-user"/>
 
                     <x-menu-item title="Login" link="/login" />
                     <x-menu-item title="Sign Up" link="/signup" />
 
-                    
-                    <x-menu-separator />
-
                 @endauth
-                
-                <x-menu-item title="Hello" icon="o-sparkles" link="/" />
-                
-                <x-menu-sub title="Settings" icon="o-cog-6-tooth">
-                    
-                    <x-menu-item title="Wifi" icon="o-wifi" link="####" />
-                    <x-menu-item title="Archives" icon="o-archive-box" link="####" />
-                </x-menu-sub>
+
+
+                <x-menu-separator Title="Trackers" icon="o-list-bullet"/>
+                    <x-menu-item title="Workouts"  link="/workouts" />
+
+
                 <x-menu-separator title="Calculators" icon="o-calculator" />
                     <x-menu-item title="Metabolic Rate" link="/metacalc" />
                     <x-menu-item title="BMI" link="/bmicalc" />

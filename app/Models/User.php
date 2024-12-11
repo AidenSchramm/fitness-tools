@@ -43,7 +43,7 @@ class User extends AuthTable
         });
     }
 
-      public static function createUser($name, $password, $email)
+    public static function createUser($name, $password, $email)
     {
 
         //($name, $password, $email)
@@ -61,10 +61,7 @@ class User extends AuthTable
             AuthController::loginUser($email,$password);
             return $user;
         }
-        
     }
-
-    
 
 
     public function workouts()
@@ -72,5 +69,3 @@ class User extends AuthTable
         return $this->hasMany(Workout::class, 'user_id', 'user_id');
     }
 }
-
-

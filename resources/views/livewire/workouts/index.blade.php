@@ -67,7 +67,7 @@ new class extends Component {
         
         $workout = Workout::createWorkout($this->newName, $this->newDesc, $this->userId);
 
-        redirect()->route('workout', ['id' => $workout->workout_id]);
+        $this->workouts = Auth::user()->workouts()->get();
         
     }
 
@@ -89,13 +89,12 @@ new class extends Component {
             <x-button label="Filters" @click="$wire.drawer = true" responsive icon="o-funnel" />
         </x-slot:actions>
     </x-header>
-    {{$newName}}
     <x-modal wire:model="modal" class="backdrop-blur">
         <x-form wire:submit="create">
             <x-input label="Name" wire:model.blur="newName" value="{{ $newName }}"></x-input>
             <x-input label="Description" wire:model.blur="newDesc" value="{{ $newDesc }}"></x-input>
             <x-button label="Cancel" @click="$wire.modal = false" />
-            <x-button label="Create" type="submit" @click="$wire.modal = false" />
+            <x-button label="Create" class="btn-primary" type="submit" @click="$wire.modal = false" />
         </x-form>
     </x-modal>
     <!-- Workout TABLE -->
@@ -109,7 +108,7 @@ new class extends Component {
                     <div style="display: flex">
 
                         <x-button icon="c-arrow-right-end-on-rectangle" wire:click="edit('{{ $row['workout_id'] }}')"  spinner class="btn-sm" />
-                        <x-button icon="o-pencil" spinner class="btn-sm" />
+                        <x-button icon="o-pencil-square" spinner class="btn-sm" />
                         <x-button icon="o-trash" wire:click="delete('{{ $row['workout_id'] }}')" spinner class="btn-sm" />
                     </div>
                 @endscope
