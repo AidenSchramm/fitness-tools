@@ -1,10 +1,12 @@
 <?php
 
 use App\Models\Workout;
+use App\Models\Exercise;
 use Illuminate\Support\Collection;
 use Livewire\Volt\Component;
 use Mary\Traits\Toast;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\Reactive;
 use function Livewire\Volt\{state};
@@ -57,13 +59,23 @@ new class extends Component {
         $this->workoutName = $this->workout->name;
         $this->exercises = $this->workout->exercises()->get();
         $this->desc = $this->workout->desc;
-
-
     }
+
+    public function delete($id) {
+        $exercises = Exercise::findOrFail($id);
+        $exercises->delete();
+
+        // Refresh the list of exercises after deletion
+        $this->exercises = $this->workout->exercises()->get();
+        $this->exerciseCnt = $this->exercises->count();
+    }
+
     public function create(): void{
         $this->validate();
         $this->modal = false;
         $this->workout->createExercise($this->newName, $this->newDesc, $this->newSets, $this->newReps, $this->newDuration);
+        $this->exercises = $this->workout->exercises()->get();
+        $this->exerciseCnt = $this->exercises->count();
     }
 };
 
@@ -105,7 +117,8 @@ new class extends Component {
             @scope('actions', $row)
             <div style="display: flex">
                 <x-button icon="o-pencil-square" wire:click="edit('{{ $row['exercise_id'] }}')"  spinner class="btn-sm" />
-                <x-button icon="o-trash" spinner class="btn-sm" />
+                <x-button icon="o-trash" wire:click="delete('{{ $row['exercise_id'] }}')" spinner class="btn-sm" />
+
             </div>
             @endscope
         </x-table>

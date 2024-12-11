@@ -49,10 +49,13 @@ new class extends Component {
     }
 
 
-    // TODO
-    // Change to delete from data base later
+    // Deletes workout sheet
     public function delete($id){
-        redirect()->route('workout', ['id' => $id]);
+        #redirect()->route('workout', ['id' => $id]);
+        $workout = Workout::findOrFail($id);
+        $workout->delete();
+        // Refresh the list of workouts after deletion
+        $this->workouts = Auth::user()->workouts()->get();
     }
 
     #[Validate('required|min:3')] 
@@ -104,8 +107,10 @@ new class extends Component {
                 @endscope
                 @scope('actions', $row)
                     <div style="display: flex">
-                        <x-button icon="o-pencil-square" wire:click="edit('{{ $row['workout_id'] }}')"  spinner class="btn-sm" />
-                        <x-button icon="o-trash" spinner class="btn-sm" />
+
+                        <x-button icon="c-arrow-right-end-on-rectangle" wire:click="edit('{{ $row['workout_id'] }}')"  spinner class="btn-sm" />
+                        <x-button icon="o-pencil" spinner class="btn-sm" />
+                        <x-button icon="o-trash" wire:click="delete('{{ $row['workout_id'] }}')" spinner class="btn-sm" />
                     </div>
                 @endscope
         </x-table>
