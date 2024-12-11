@@ -114,7 +114,7 @@ new class extends Component {
         <h2>Confirm Delete</h2>
         <p>Are you sure you want delete this workout?</p>
         <x-button label="Cancel" @click="$wire.deleteModal = false" />
-        <x-button label="Delete" class="btn-danger" @click="$wire.confirmDelete" />
+        <x-button label="Delete" class="btn-primary" @click="$wire.confirmDelete" />
     </x-modal>
     <!-- Workout TABLE -->
     <x-card>
