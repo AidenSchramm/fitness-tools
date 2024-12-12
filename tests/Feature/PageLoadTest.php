@@ -96,12 +96,9 @@ class PageLoadTest extends TestCase
 
 
         $response->assertSee($workout->name);
-
-        $string = '/workout/' . $workout->id;
         $response = $this->actingAs($user)->get(route('workout', ['id' => $workout->workout_id]));
-        
-
-        //$response->assertStatus(200);
+            
+        $response->assertStatus(200);
         $response->assertSee("Exercise");
 
 
