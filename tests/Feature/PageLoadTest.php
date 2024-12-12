@@ -85,4 +85,24 @@ class PageLoadTest extends TestCase
         $response->assertSee($workout->name);
     }
 
+    public function test_workouts_create_workout_and_navigate_to(): void
+    {
+        $user = User::factory()->create();
+        $workout = Workout::factory()->create();
+
+        $response = $this->actingAs($user)->get('/workouts');
+
+        $response->assertStatus(200);
+
+
+        $response->assertSee($workout->name);
+
+        $string = '/workout/' . $workout->id;
+        $response = $this->actingAs($user)->get($string);
+
+        //$response->assertStatus(200);
+        $response->assertSee("Exercise");
+
+
+    }
 }
