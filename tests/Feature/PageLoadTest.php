@@ -89,7 +89,7 @@ class PageLoadTest extends TestCase
     {
         $user = User::factory()->create();
         $workout = Workout::factory()->create();
-
+        $this->followingRedirects();
         $response = $this->actingAs($user)->get('/workouts');
 
         $response->assertStatus(200);
@@ -98,7 +98,8 @@ class PageLoadTest extends TestCase
         $response->assertSee($workout->name);
 
         $string = '/workout/' . $workout->id;
-        $response = $this->actingAs($user)->get($string);
+        $response = $this->actingAs($user)->get(route('workout', ['id' => $workout->workout_id]));
+        
 
         //$response->assertStatus(200);
         $response->assertSee("Exercise");
