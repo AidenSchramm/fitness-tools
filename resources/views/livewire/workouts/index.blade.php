@@ -10,8 +10,13 @@ new class extends Component {
     use Toast;
 
     public $modal;
-    public $deleteModal = false;
-    public $deleteID;
+    public $deleteModal = false; //sets visibility of delete modal
+    public $deleteID; //set id to deleteID variable
+
+    public $editModal = false; //sets visibility of edit modal
+    public $editID; //set id to editID variable
+    public $editName = '';
+    public $editDesc = '';
     public $userId;
 
     public array $headers = [
@@ -44,15 +49,34 @@ new class extends Component {
         $this->workouts = $user->workouts()->get();
 
     }
-    
-    public function edit($id){
-        redirect()->route('workout', ['id' => $id]);
+    //upon triggering, will make edit modal visible
+    public function showEditModal($id){
+        $workouts = Workout::findOrFail($id);
+        $this->editID = $id;
+        $this->editName = $workouts->name;
+        $this->editDesc = $workouts->desc;
+        $this->editModal = true;
+    }
+    public function confirmEdit() {
+        $this->validate(['editName'=>'required|min:3', 'editDesc'=>'required|min:3']);
+        $workouts = Workout::findOrFail($this->editID);
+        $workouts->name = $this->editName;
+        $workouts->desc = $this->editDesc;
+        $workouts->save();
+        $this->workouts = Auth::user()->workouts()->get();
+        $this->editModal = false;
     }
 
+    public function edit($id){
+        redirect()->route('workout',['id'=>$id]);
+    }
+
+    //upon triggering, will make delete modal visible
     public function showDeleteModal($id){
         $this->deleteID = $id;
         $this->deleteModal = true;
     }
+    //upon trigger, will trigger delete function
     public function confirmDelete() {
         $this->delete($this->deleteID);
         $this->deleteModal = false;
@@ -108,7 +132,14 @@ new class extends Component {
         </x-form>
     </x-modal>
     <!--EDIT MODAL-->
-
+    <x-modal wire:model="editModal" class="backdrop-blur">
+        <x-form wire:submit.prevent="confirmEdit">
+            <x-input label="Name" wire:model.blur="editName" />
+            <x-input label="Description" wire:model.blur="editDesc" />
+            <x-button label="Cancel" @click="$wire.editModal = false" />
+            <x-button label="Apply" class="btn-primary" type="submit" @click="$wire.editModal = false" />
+        </x-form>
+    </x-modal>
     <!--DELETE MODAL-->
     <x-modal wire:model="deleteModal" class="backdrop-blur">
         <h2>Confirm Delete</h2>
@@ -125,10 +156,11 @@ new class extends Component {
                 @endscope
                 @scope('actions', $row)
                     <div style="display: flex">
-
                         <x-button icon="c-arrow-right-end-on-rectangle" wire:click="edit('{{ $row['workout_id'] }}')"  spinner class="btn-sm" />
-                        <x-button icon="o-pencil-square" spinner class="btn-sm" />
-                        <x-button icon="o-trash" wire:click="showDeleteModal('{{ $row['workout_id'] }}')" spinner class="btn-sm" />                @endscope
+                        <x-button icon="o-pencil-square" wire:click="showEditModal('{{ $row['workout_id'] }}')" spinner class="btn-sm" />
+                        <x-button icon="o-trash" wire:click="showDeleteModal('{{ $row['workout_id'] }}')" spinner class="btn-sm" />
+                    </div>
+                @endscope
         </x-table>
         <x-slot:actions>
             <x-button label="New" class="btn-primary" @click="$wire.modal = true" />
