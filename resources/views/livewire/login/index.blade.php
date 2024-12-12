@@ -22,13 +22,6 @@ new class extends Component {
         $this->validate(); 
 
         AuthController::loginUser($this->email, $this->password);
-        //Log::info('User authenticated.', ['auth_id' => Auth::id()]);
-        // if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
-        //     session()->regenerate();
-        //     return redirect()->intended('/dashboard'); // Redirect to dashboard or desired page
-        // }
-
-        //  $this->addError('email', 'The provided credentials do not match our records.');
     }
 }
 
