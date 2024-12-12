@@ -4,7 +4,7 @@ use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
-Volt::route('/', 'users.index');
+Volt::route('/', 'login.index');
 
 Volt::route('/metacalc', 'metacalc.index');
 Volt::route('/bmicalc', 'bmicalc.index');

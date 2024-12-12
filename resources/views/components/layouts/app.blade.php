@@ -37,8 +37,8 @@
                 @auth
                     <x-menu-separator title="Account" icon="o-user"/>
 
-                    <p>Welcome, {{ Auth::user()->user_name }}!</p>
-                    <x-list-item :item="auth()->user()" value="name" sub-value="email" no-separator no-hover class="-mx-2 !-my-2 rounded">
+                    <!-- <p>Welcome, {{ Auth::user()->user_name }}!</p> -->
+                    <x-list-item :item="auth()->user()" value="name" sub-value="email" no-separator no-hover class="!mx-2 !-my-2 rounded">
                         <x-slot:actions>
                             {{-- <x-form action="{{ route('logout') }}" method="POST"> --}}
                             <x-form action="{{ route('logout') }}" method="POST">
