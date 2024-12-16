@@ -16,13 +16,12 @@ new class extends Component {
 
     public $selected;
 
+    // Actual claculation function
     public function save(): void
     {
         
         // Male: BMR = 66.47 + ( 6.24 × weight in pounds ) + ( 12.7 × height in inches ) – ( 6.755 × age in years )
         // Female: BMR = 655.1 + ( 4.35 × weight in pounds ) + ( 4.7 × height in inches ) - ( 4.676 × age in years )
-
-        error_log($this->selected);
         
         if ($this->selected == 0) {
             $this->rate = 66.47 + ( 6.24 * $this->weight ) + (12.7 * (($this->feet * 12) + $this->inches)) - (6.755 * $this->age);

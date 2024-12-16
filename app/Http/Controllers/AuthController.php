@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
+    // Will logout user
     public static function logout(Request $request): RedirectResponse
     {
 
@@ -36,7 +37,7 @@ class AuthController extends Controller
     }
 
 
-
+    // Creates new user and adds ot database
     public static function createUser(Request $request): RedirectResponse
     {
 
@@ -61,7 +62,7 @@ class AuthController extends Controller
 
 
 
-
+    // Will login user
     public static function loginUser($email, $password)
     {
         // $email = $request->email;
@@ -85,6 +86,7 @@ class AuthController extends Controller
     //     return redirect('/');
     // }
 
+    // Used to check is session is still valid
     public static function checkAuth()
     {
         return Auth::check();

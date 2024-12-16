@@ -28,6 +28,7 @@ new class extends Component {
     public $selected;
     public $show = false;
 
+    // Calculation function triggered on form submission
     public function save()
     {
         
@@ -36,7 +37,6 @@ new class extends Component {
         // Body Fat Men:      BFP = 86.010  × log10(abdomen-neck)   - 70.041 × log10(height) + 36.76
         // Body Fat Women:    BFP = 163.205 × log10(waist+hip-neck) - 97.684 × (log10(height)) - 78.387
 
-        error_log($this->selected);
         
         $temp_height  = (($this->height_feet  * 12) + $this->height_inch);
         $temp_abdomen = $this->abdomen_inch;
@@ -57,9 +57,7 @@ new class extends Component {
             $this->rate = -1;
         }
 
-        error_log($this->bmi);
         $this->bodyfat = number_format((float)$this->bodyfat, 1, '.', '');
-        error_log($this->bmi);
         
     }
     public function updated($name, $value) 

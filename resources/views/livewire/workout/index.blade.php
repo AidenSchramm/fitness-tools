@@ -42,6 +42,7 @@ new class extends Component {
     public $editSets;
     public $editReps;
 
+    // Table Format
     public array $headers = [
             ['key' => 'exercise_id', 'label' => '#', 'class' => 'w-1'],
             ['key' => 'name', 'label' => 'Exercise', 'class' => 'w-64'],
@@ -58,6 +59,7 @@ new class extends Component {
         ];
     }
 
+    // Before page load gets data and puts in the object for the website
     public function mount($id) {
 
         $this->workout = Workout::find($id);
@@ -78,6 +80,7 @@ new class extends Component {
         $this->editReps = $exercises->reps;
         $this->editModal = true;
     }
+    // Asks to confirm edit to existing exercise
     public function confirmEdit() {
         $this->validate(['editName'=>'required|min:3', 'editDesc'=>'required|min:3', 'editSets'=>'integer', 'editReps'=>'integer']);
         $exercises = Exercise::findOrFail($this->editID);
@@ -91,7 +94,7 @@ new class extends Component {
     }
 
     
-
+    // Deletes exercise
     public function delete($id) {
         $exercises = Exercise::findOrFail($id);
         $exercises->delete();
@@ -100,7 +103,7 @@ new class extends Component {
         $this->exercises = $this->workout->exercises()->get();
         $this->exerciseCnt = $this->exercises->count();
     }
-
+    // Creates exercise
     public function create(): void{
         $this->validate();
         $this->modal = false;

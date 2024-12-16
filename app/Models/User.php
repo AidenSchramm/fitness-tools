@@ -43,6 +43,7 @@ class User extends AuthTable
         });
     }
 
+    // Used to create user
     public static function createUser($name, $password, $email)
     {
 
@@ -63,7 +64,7 @@ class User extends AuthTable
         }
     }
 
-
+    // Can be used to get users connected workouts
     public function workouts()
     {
         return $this->hasMany(Workout::class, 'user_id', 'user_id');

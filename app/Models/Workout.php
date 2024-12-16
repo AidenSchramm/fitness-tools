@@ -32,17 +32,19 @@ class Workout extends Model
         return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 
+    // Can be used to get connected exercises
     public function exercises()
     {
         return $this->hasMany(Exercise::class, 'workout_id', 'workout_id');
     }
 
+    // Can be used to created new exercise connected to workout object
     public function createExercise(string $name, string $desc, int $sets, int $reps, $duration){
         return Exercise::createExercise($name, $desc, $sets, $reps, $duration, $this->workout_id);
     }
 
 
-
+    // Can be used to create new workout object
     public static function createWorkout(string $name, string $desc, $userId){
         return Workout::create([
             'name' => $name,

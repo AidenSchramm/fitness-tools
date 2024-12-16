@@ -26,11 +26,13 @@ class Exercise extends Model
         });
     }
 
+    // Get connected workout
     public function workout()
     {
         return $this->belongsTo(Workout::class, 'workout_id', 'workout_id');
     }
 
+    // Can be used to create new exercise object
     public static function createExercise(string $name, string $desc, int $sets, int $reps, $duration, string $workout_id) {
             return Exercise::create([
                 'name' => $name,

@@ -19,6 +19,8 @@ new class extends Component {
     public $editDesc = '';
     public $userId;
 
+
+    // Table Format
     public array $headers = [
             ['key' => 'workout_id', 'label' => '#', 'class' => 'w-1'],
             ['key' => 'name', 'label' => 'Workout', 'class' => 'w-64'],
@@ -57,6 +59,8 @@ new class extends Component {
         $this->editDesc = $workouts->desc;
         $this->editModal = true;
     }
+
+    // Used to show popup confirm
     public function confirmEdit() {
         $this->validate(['editName'=>'required|min:3', 'editDesc'=>'required|min:3']);
         $workouts = Workout::findOrFail($this->editID);
@@ -67,6 +71,7 @@ new class extends Component {
         $this->editModal = false;
     }
 
+    // Brings to workout page for workout
     public function edit($id){
         redirect()->route('workout',['id'=>$id]);
     }
@@ -95,6 +100,7 @@ new class extends Component {
     public string $newName;
     public string $newDesc;
 
+    // Creates workout
     public function create(){
         $this->validate();
         
@@ -104,6 +110,7 @@ new class extends Component {
         $this->resetCreate();
     }
 
+    // Reset creation form
     public function resetCreate(){
         $this->newName = '';
         $this->newDesc = '';

@@ -26,11 +26,11 @@ new class extends Component {
     public function save() {
         $this->validate(); 
 
-        
+        // Checks if emails are the same and trys to create user and if doesn't work adds error
         if(($this->email) == ($this->cEmail)){
             $output = User::createUser($this->name, $this->password, $this->email);
             if($output == null){
-                $this->addError('email', 'The provided credentials do not match our records.');
+                $this->addError('email', 'Username or Email already taken.');
             } else{
                 redirect('/');
             }

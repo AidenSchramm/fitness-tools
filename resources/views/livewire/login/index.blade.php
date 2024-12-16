@@ -16,6 +16,7 @@ new class extends Component {
     #[Validate('required|min:6')] 
     public $password = '';
 
+    // Sends login request after confirming validated data
     public function login(Request $request)
     {
 
