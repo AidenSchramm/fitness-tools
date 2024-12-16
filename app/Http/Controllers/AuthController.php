@@ -19,8 +19,6 @@ class AuthController extends Controller
 {
     public static function logout(Request $request): RedirectResponse
     {
-        error_log('Some message here.');
-
 
         auth()->logout();
         Session::flush();
@@ -32,7 +30,6 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         Session::regenerate();
-        error_log('Some message here.');
         
         // return redirect($request::previous());
         return redirect('/');
@@ -67,10 +64,6 @@ class AuthController extends Controller
 
     public static function loginUser($email, $password)
     {
-
-        error_log('Some message here.');
-        error_log($email);
-        error_log($password);
         // $email = $request->email;
         // $password = $request->password;
         $temp = Auth::attempt(['email' => $email, 'password' => $password]);
