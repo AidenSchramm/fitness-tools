@@ -49,12 +49,15 @@ class PageLoadTest extends TestCase
 
     public function test_workouts_returns_a_successful_response(): void
     {
+        // Creates example user
         $user = User::factory()->create();
 
+        // Goes to page acting as if logged in as example user
         $response = $this->actingAs($user)->get('/workouts');
 
         $response->assertStatus(200);
 
+        // Check to see if table loaded
         $response->assertOk()->assertSee(['<table', '</table>'], false);
     }
 
@@ -62,6 +65,7 @@ class PageLoadTest extends TestCase
     {
         $user = User::factory()->create();
 
+        // Makes sure the test waits for redirects to happen before asserting.
         $this->followingRedirects();
 
         $response = $this->get('/workouts');
@@ -81,7 +85,7 @@ class PageLoadTest extends TestCase
 
         $response->assertStatus(200);
 
-
+        // Checks to see that workout was added to the table
         $response->assertSee($workout->name);
     }
 
