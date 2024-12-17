@@ -16,7 +16,7 @@ new class extends Component {
 
     public $selected;
 
-    // Actual claculation function
+    // Actual calculation function
     public function save(): void
     {
         
